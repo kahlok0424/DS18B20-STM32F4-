@@ -12,8 +12,7 @@ C_SRCS += \
 ../src/tm_stm32f4_disco.c \
 ../src/tm_stm32f4_ds18b20.c \
 ../src/tm_stm32f4_gpio.c \
-../src/tm_stm32f4_onewire.c \
-../src/tm_stm32f4_usart.c 
+../src/tm_stm32f4_onewire.c 
 
 OBJS += \
 ./src/main.o \
@@ -24,8 +23,7 @@ OBJS += \
 ./src/tm_stm32f4_disco.o \
 ./src/tm_stm32f4_ds18b20.o \
 ./src/tm_stm32f4_gpio.o \
-./src/tm_stm32f4_onewire.o \
-./src/tm_stm32f4_usart.o 
+./src/tm_stm32f4_onewire.o 
 
 C_DEPS += \
 ./src/main.d \
@@ -36,8 +34,7 @@ C_DEPS += \
 ./src/tm_stm32f4_disco.d \
 ./src/tm_stm32f4_ds18b20.d \
 ./src/tm_stm32f4_gpio.d \
-./src/tm_stm32f4_onewire.d \
-./src/tm_stm32f4_usart.d 
+./src/tm_stm32f4_onewire.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

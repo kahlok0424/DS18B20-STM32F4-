@@ -15,9 +15,6 @@ src/main.o: ../src/main.c \
  C:/Users/user/workspace/NewTempSen/inc/stm32f4xx_gpio.h \
  C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_delay.h \
  C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_gpio.h \
- C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_usart.h \
- C:/Users/user/workspace/NewTempSen/inc/misc.h \
- C:/Users/user/workspace/NewTempSen/inc/stm32f4xx_usart.h \
  C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_ds18b20.h \
  C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_onewire.h \
  C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_disco.h
@@ -53,12 +50,6 @@ C:/Users/user/workspace/NewTempSen/inc/stm32f4xx_gpio.h:
 C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_delay.h:
 
 C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_gpio.h:
-
-C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_usart.h:
-
-C:/Users/user/workspace/NewTempSen/inc/misc.h:
-
-C:/Users/user/workspace/NewTempSen/inc/stm32f4xx_usart.h:
 
 C:/Users/user/workspace/NewTempSen/inc/tm_stm32f4_ds18b20.h:
 

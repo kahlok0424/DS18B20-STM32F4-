@@ -7,10 +7,11 @@
 
 
 #include "stm32f4xx.h"
+
 #include "defines.h"
 #include "tm_stm32f4_delay.h"
 #include "tm_stm32f4_onewire.h"
-#include "tm_stm32f4_usart.h"
+//#include "tm_stm32f4_usart.h"
 #include <stdio.h>
 #include "tm_stm32f4_ds18b20.h"
 #include "tm_stm32f4_disco.h"
@@ -32,9 +33,9 @@ int main(void) {
 
     /* Initialize OneWire1 instance on pin PD0 */
     TM_OneWire_Init(&OneWire, GPIOA, GPIO_Pin_10);
-
+    TM_GPIO_Init(GPIOA, GPIO_Pin_5, TM_GPIO_Mode_OUT, TM_GPIO_OType_OD, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_Medium);
     /* Initialize USART, TX: PB6, RX: PB7 */
-    TM_USART_Init(USART2, TM_USART_PinsPack_2, 115200);
+   // TM_USART_Init(USART1, TM_USART_PinsPack_2, 115200);
 
     /* Check for any device on 1-wire */
     devices = TM_OneWire_First(&OneWire);
@@ -79,6 +80,8 @@ int main(void) {
         /* Set high temperature alarm on device number 0, 25 degrees celcius */
         TM_DS18B20_SetAlarmHighTemperature(&OneWire, device[0], 70);
 
+        TM_DS18B20_SetAlarmLowTemperature(&OneWire , device[0], -20);
+
         /* Disable alarm temperatures on device number 1 */
         TM_DS18B20_DisableAlarmTemperature(&OneWire, device[1]);
 
@@ -89,55 +92,12 @@ int main(void) {
             /* Wait until all are done on one onewire port */
             while (!TM_DS18B20_AllDone(&OneWire));
 
-            /* Read temperature from each device separatelly */
-            for (i = 0; i < count; i++) {
-                /* Read temperature from ROM address and store it to temps variable */
-                if (TM_DS18B20_Read(&OneWire, device[i], &temp[i])) {
-                    /* Print temperature */
-                    sprintf(buf, "Temp %d: %3.5f; \n", i, temp[i]);
-                    TM_USART_Puts(USART1, buf);
-                } else {
-                    /* Reading error */
-                    TM_USART_Puts(USART1, "Reading error;\n");
+            /* Read temperature from ROM address and store it to temps variable */
+            TM_DS18B20_Read(&OneWire, device[0], &temp[0]);
+            TM_GPIO_TogglePinValue(GPIOA, GPIO_Pin_5);
+
                 }
-            }
 
-            /* Reset alarm count */
-            alarm_count = 0;
-
-            /* Check if any device has alarm flag set */
-            while (TM_DS18B20_AlarmSearch(&OneWire)) {
-                /* Store ROM of device which has alarm flag set */
-                TM_OneWire_GetFullROM(&OneWire, alarm_device[alarm_count]);
-                /* Increase count */
-                alarm_count++;
-            }
-
-            /* Format string and send over USART for debug */
-            sprintf(buf, "Devices with alarm: %d\n", alarm_count);
-            TM_USART_Puts(USART1, buf);
-
-            /* Any device has alarm flag set? */
-            if (alarm_count > 0) {
-                /* Show rom of this devices */
-                for (j = 0; j < alarm_count; j++) {
-                    TM_USART_Puts(USART1, "Device with alarm: ");
-                    for (i = 0; i < 8; i++) {
-                        sprintf(buf, "0x%02X ", alarm_device[j][i]);
-                        TM_USART_Puts(USART1, buf);
-                    }
-                    TM_USART_Puts(USART1, "\n    ");
-                }
-                TM_USART_Puts(USART1, "ALARM devices recognized!\n\r");
-            }
-
-            /* Print separator */
-            TM_USART_Puts(USART1, "----------\n");
-
-            /* Some delay */
-            Delayms(1000);
-        }
-    }
-
+}
 
 
